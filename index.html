@@ -6,39 +6,32 @@
 <title>appunti</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:ital,wght@0,300;0,400;0,600;1,300&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-:root {
-  /* ── SFONDI (dal più scuro al più chiaro) ── */
-  --bg:       #080b12;   /* sfondo principale della pagina */
-  --bg2:      #0d1120;   /* sfondo secondario (es. input, modal) */
-  --surface:  #0f1520;   /* pannelli e card */
-  --surface2: #141c2e;   /* toolbar, statusbar, header sezioni */
+  :root {
+    --bg:        #080b12;
+    --bg2:       #0d1120;
+    --surface:   #0f1520;
+    --surface2:  #141c2e;
+    --border:    #1a2540;
+    --border2:   #121a2e;
 
-  /* ── BORDI ── */
-  --border:  #1a2540;    /* bordo principale */
-  --border2: #121a2e;    /* bordo sottile tra elementi interni */
+    --cyan:      #00e5ff;
+    --pink:      #ff2d78;
+    --gold:      #f0a500;
+    --teal:      #00b4a2;
 
-  /* ── COLORI ACCENTO (palette Miami Vice) ── */
-  --cyan: #00e5ff;       /* accento primario — tab attivi, focus, link */
-  --pink: #ff2d78;       /* accento secondario — salva, elimina, GPS */
-  --gold: #f0a500;       /* accento terziario — quick capture, timeline */
-  --teal: #00b4a2;       /* accento quaternario — conferme, badge voci */
+    --cyan-glow:  rgba(0,229,255,0.10);
+    --pink-glow:  rgba(255,45,120,0.10);
+    --cyan-dim:   rgba(0,229,255,0.45);
+    --pink-dim:   rgba(255,45,120,0.45);
 
-  /* ── VARIANTI TRASPARENTI DEGLI ACCENTI ── */
-  --cyan-glow: rgba(0,229,255,0.10);   /* sfondo hover/attivo cyan */
-  --pink-glow: rgba(255,45,120,0.10);  /* sfondo hover/attivo pink */
-  --cyan-dim:  rgba(0,229,255,0.45);   /* cyan attenuato (testo secondario) */
-  --pink-dim:  rgba(255,45,120,0.45);  /* pink attenuato (testo secondario) */
+    --fg:        #d6eaf8;
+    --fg-dim:    #4a6080;
+    --fg-muted:  #243248;
 
-  /* ── TESTO ── */
-  --fg:       #d6eaf8;   /* testo principale */
-  --fg-dim:   #4a6080;   /* testo secondario (metadati, label) */
-  --fg-muted: #243248;   /* testo quasi invisibile (placeholder, decorazioni) */
-
-  /* ── FONT ── */
-  --mono:    'Share Tech Mono', monospace;  /* codice, orari, tag, label */
-  --display: 'Bebas Neue', sans-serif;      /* titoli, pulsanti, tab */
-  --body:    'Raleway', sans-serif;         /* testo degli appunti */
-}
+    --mono: 'Share Tech Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'Raleway', sans-serif;
+  }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   ::selection { background: var(--pink); color: #fff; }
@@ -664,9 +657,208 @@
     background: var(--bg); border: 1px solid var(--border);
     padding: 0 4px; border-radius: 2px; color: var(--gold);
   }
+
+  /* ── LIGHT MODE ── */
+  body.light {
+    --bg:       #f0f2f5;
+    --bg2:      #e8eaf0;
+    --surface:  #ffffff;
+    --surface2: #f5f6fa;
+    --border:   #d0d5e0;
+    --border2:  #e2e5ee;
+
+    --cyan:     #0077cc;
+    --pink:     #d6004a;
+    --gold:     #b07800;
+    --teal:     #007a6e;
+
+    --cyan-glow: rgba(0,119,204,0.08);
+    --pink-glow: rgba(214,0,74,0.08);
+    --cyan-dim:  rgba(0,119,204,0.7);
+    --pink-dim:  rgba(214,0,74,0.7);
+
+    --fg:       #1a1e2e;
+    --fg-dim:   #5a6280;
+    --fg-muted: #9aa0b8;
+  }
+
+  /* in light mode disabilita la griglia e le scanlines */
+  body.light::before, body.light::after { display: none; }
+
+  /* pulsante tema */
+  .btn-theme {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg-dim);
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .btn-theme:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ── SFONDO ANIMATO ── */
+  #bgCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+  body.light #bgCanvas { opacity: 0.18; }
+
+  /* ── NAV PAGINE ── */
+  .page-nav {
+    width: 100%; max-width: 780px;
+    display: flex; gap: 3px;
+    margin-bottom: 1.2rem;
+  }
+  .page-nav-btn {
+    font-family: var(--display);
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg-dim);
+    padding: 0.45rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .page-nav-btn:hover { color: var(--cyan); border-color: var(--cyan); }
+  .page-nav-btn.active {
+    color: var(--cyan); border-color: var(--cyan);
+    background: var(--cyan-glow);
+    text-shadow: 0 0 10px rgba(0,229,255,0.3);
+  }
+
+  /* ── GALLERIA ── */
+  .gallery-page {
+    display: none;
+    width: 100%; max-width: 780px;
+    flex-direction: column; gap: 1.2rem;
+  }
+  .gallery-page.visible { display: flex; }
+
+  .gallery-search {
+    display: flex; align-items: center;
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.5rem 0.8rem; gap: 0.5rem;
+  }
+  .gallery-search input {
+    flex: 1; background: transparent; border: none; outline: none;
+    font-family: var(--mono); font-size: 0.75rem;
+    color: var(--fg); caret-color: var(--cyan);
+    letter-spacing: 0.03em;
+  }
+  .gallery-search input::placeholder { color: var(--fg-muted); }
+
+  .gallery-nb-filter {
+    display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
+  }
+  .gallery-nb-filter span {
+    font-family: var(--mono); font-size: 0.54rem;
+    color: var(--fg-muted); letter-spacing: 0.1em;
+    text-transform: uppercase; flex-shrink: 0;
+  }
+  .gnb-pill {
+    font-family: var(--mono); font-size: 0.56rem;
+    padding: 2px 8px; border-radius: 2px;
+    border: 1px solid var(--border); color: var(--fg-dim);
+    cursor: pointer; transition: all 0.15s; background: transparent;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .gnb-pill:hover { border-color: var(--pink); color: var(--pink); }
+  .gnb-pill.active { border-color: var(--pink); color: var(--pink); background: var(--pink-glow); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 720px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 440px) { .gallery-grid { grid-template-columns: 1fr; } }
+
+  .g-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--border);
+    padding: 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    position: relative; overflow: hidden;
+    min-height: 140px;
+  }
+  .g-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 28px;
+    background: linear-gradient(transparent, var(--surface));
+    pointer-events: none;
+  }
+  .g-card:hover {
+    border-color: var(--cyan);
+    border-top-color: var(--cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,229,255,0.08);
+  }
+  .g-card:hover::after { background: linear-gradient(transparent, var(--surface)); }
+
+  .g-card-nb {
+    font-family: var(--mono); font-size: 0.52rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--pink-dim);
+  }
+  .g-card-date {
+    font-family: var(--mono); font-size: 0.54rem;
+    color: var(--fg-muted); letter-spacing: 0.05em;
+    display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  }
+  .g-card-mood { font-size: 0.75rem; }
+  .g-card-text {
+    font-family: var(--body); font-weight: 300;
+    font-size: 0.78rem; line-height: 1.6;
+    color: var(--fg-dim); flex: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
+  .g-card-tags {
+    display: flex; gap: 3px; flex-wrap: wrap; margin-top: auto;
+  }
+  .g-card-tag {
+    font-family: var(--mono); font-size: 0.5rem;
+    padding: 1px 4px; border-radius: 2px;
+    background: rgba(0,229,255,0.06);
+    border: 1px solid rgba(0,229,255,0.15);
+    color: rgba(0,229,255,0.5);
+  }
+
+  .gallery-empty {
+    grid-column: 1/-1; text-align: center;
+    padding: 3rem 1rem;
+    font-family: var(--mono); font-size: 0.68rem;
+    color: var(--fg-muted); letter-spacing: 0.08em;
+  }
+
+  .gallery-count {
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--fg-muted); letter-spacing: 0.08em;
+    padding: 0 2px;
+  }
 </style>
 </head>
 <body>
+
+<canvas id="bgCanvas"></canvas>
 
 <header>
   <div class="header-left">
@@ -681,9 +873,16 @@
       <span id="clockLoc">rilevamento…</span>
     </div>
   </div>
+  <button class="btn-theme" id="btnTheme" title="Cambia tema">☀ CHIARO</button>
 </header>
 
 <div class="hline"></div>
+
+<!-- NAV PAGINE -->
+<div class="page-nav">
+  <button class="page-nav-btn active" id="navEditor">EDITOR</button>
+  <button class="page-nav-btn" id="navGallery">GALLERIA</button>
+</div>
 
 <!-- GITHUB SYNC PANEL -->
 <div class="gh-bar" id="ghBar">
@@ -699,12 +898,12 @@
   <div class="gh-body" id="ghBody">
     <div class="gh-fields">
       <div class="gh-field">
-        <label class="gh-label">Personal Access Token </label>
-        <input type="password" class="gh-input" id="ghToken" placeholder="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">
+        <label class="gh-label">Personal Access Token</label>
+        <input type="password" class="gh-input" id="ghToken" value="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">
       </div>
       <div class="gh-field">
         <label class="gh-label">Repository (utente/nome)</label>
-        <input type="text" class="gh-input" id="ghRepo" placeholder="giuliano-cappellini/prova-per-appunti-1">
+        <input type="text" class="gh-input" id="ghRepo" value="giuliano-cappellini/prova-per-appunti-1">
       </div>
       <div class="gh-field">
         <label class="gh-label">Branch</label>
@@ -751,6 +950,22 @@
       <button class="btn-save" id="btnSave">SALVA</button>
     </div>
   </div>
+</div>
+
+<!-- GALLERIA -->
+<div class="gallery-page" id="galleryPage">
+  <div style="display:flex; gap:.6rem; align-items:center; flex-wrap:wrap;">
+    <div class="gallery-search" style="flex:1; min-width:180px;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="gallerySearch" placeholder="cerca nelle anteprime…">
+    </div>
+    <span class="gallery-count" id="galleryCount"></span>
+  </div>
+  <div class="gallery-nb-filter">
+    <span>blocco:</span>
+    <span class="gnb-pill active" data-nb="all">TUTTI</span>
+  </div>
+  <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
@@ -1142,6 +1357,226 @@ async function ghPushAll() {
 
 load(); renderTabs(); renderPage(); fetchLoc();
 ghInit();
+
+// ── TEMA CHIARO / SCURO ──────────────────────
+(function() {
+  const btn = document.getElementById('btnTheme');
+  const saved = localStorage.getItem('blocchi_theme');
+  if (saved === 'light') applyLight();
+
+  btn.addEventListener('click', () => {
+    if (document.body.classList.contains('light')) {
+      document.body.classList.remove('light');
+      btn.textContent = '☀ CHIARO';
+      localStorage.setItem('blocchi_theme', 'dark');
+    } else {
+      applyLight();
+    }
+  });
+
+  function applyLight() {
+    document.body.classList.add('light');
+    btn.textContent = '◑ SCURO';
+    localStorage.setItem('blocchi_theme', 'light');
+  }
+})();
+
+// ── SFONDO ANIMATO ───────────────────────────
+(function() {
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], lines = [];
+  const COLORS = ['#00e5ff','#ff2d78','#f0a500','#00b4a2'];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Particelle fluttuanti
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.x  = Math.random() * W;
+      this.y  = init ? Math.random() * H : H + 10;
+      this.r  = Math.random() * 1.5 + 0.3;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = -(Math.random() * 0.4 + 0.1);
+      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      this.alpha = Math.random() * 0.5 + 0.1;
+      this.life  = 0;
+      this.maxLife = Math.random() * 300 + 200;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      this.life++;
+      if (this.y < -10 || this.life > this.maxLife) this.reset(false);
+    }
+    draw() {
+      const a = this.life < 30 ? this.life / 30 :
+                this.life > this.maxLife - 30 ? (this.maxLife - this.life) / 30 : 1;
+      ctx.globalAlpha = this.alpha * a;
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // Linee luminose orizzontali che scorrono
+  class ScanLine {
+    constructor() { this.reset(true); }
+    reset(init) {
+      this.y     = init ? Math.random() * H : -5;
+      this.speed = Math.random() * 0.6 + 0.2;
+      this.alpha = Math.random() * 0.06 + 0.02;
+      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      this.w     = Math.random() * 0.5 + 0.3;
+    }
+    update() {
+      this.y += this.speed;
+      if (this.y > H + 5) this.reset(false);
+    }
+    draw() {
+      ctx.globalAlpha = this.alpha;
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth   = this.w;
+      ctx.beginPath();
+      ctx.moveTo(0, this.y); ctx.lineTo(W, this.y);
+      ctx.stroke();
+    }
+  }
+
+  // Inizializza
+  for (let i = 0; i < 120; i++) particles.push(new Particle());
+  for (let i = 0; i < 8;   i++) lines.push(new ScanLine());
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Gradient radiale al centro
+    const grd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W, H) * 0.7);
+    grd.addColorStop(0,   'rgba(0,229,255,0.03)');
+    grd.addColorStop(0.5, 'rgba(255,45,120,0.015)');
+    grd.addColorStop(1,   'transparent');
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, W, H);
+
+    lines.forEach(l => { l.update(); l.draw(); });
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// ── NAVIGAZIONE PAGINE ───────────────────────
+const editorSection  = document.querySelector('.app');
+const ghSection      = document.getElementById('ghBar');
+const galleryPage    = document.getElementById('galleryPage');
+let galleryNbFilter  = 'all';
+let gallerySearchQ   = '';
+
+document.getElementById('navEditor').addEventListener('click', () => showPage('editor'));
+document.getElementById('navGallery').addEventListener('click', () => showPage('gallery'));
+
+function showPage(page) {
+  const isEditor = page === 'editor';
+  document.getElementById('navEditor').classList.toggle('active', isEditor);
+  document.getElementById('navGallery').classList.toggle('active', !isEditor);
+  editorSection.style.display  = isEditor ? '' : 'none';
+  ghSection.style.display      = isEditor ? '' : 'none';
+  galleryPage.classList.toggle('visible', !isEditor);
+  if (!isEditor) renderGallery();
+}
+
+// ── GALLERIA ─────────────────────────────────
+document.getElementById('gallerySearch').addEventListener('input', e => {
+  gallerySearchQ = e.target.value.toLowerCase();
+  renderGallery();
+});
+
+function renderGallery() {
+  // Filtri blocco
+  const filterRow = document.querySelector('.gallery-nb-filter');
+  filterRow.innerHTML = '<span>blocco:</span>';
+  const allPill = document.createElement('span');
+  allPill.className = 'gnb-pill' + (galleryNbFilter === 'all' ? ' active' : '');
+  allPill.dataset.nb = 'all'; allPill.textContent = 'TUTTI';
+  allPill.addEventListener('click', () => { galleryNbFilter = 'all'; renderGallery(); });
+  filterRow.appendChild(allPill);
+
+  notebooks.forEach(n => {
+    const p = document.createElement('span');
+    p.className = 'gnb-pill' + (galleryNbFilter === n.id ? ' active' : '');
+    p.dataset.nb = n.id; p.textContent = n.name;
+    p.addEventListener('click', () => { galleryNbFilter = n.id; renderGallery(); });
+    filterRow.appendChild(p);
+  });
+
+  // Raccoglie voci
+  let entries = [];
+  notebooks.forEach(n => {
+    if (galleryNbFilter !== 'all' && galleryNbFilter !== n.id) return;
+    n.entries.forEach(e => entries.push({ ...e, nbName: n.name, nbId: n.id }));
+  });
+  entries.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+
+  // Filtro ricerca
+  if (gallerySearchQ) {
+    entries = entries.filter(e =>
+      e.text.toLowerCase().includes(gallerySearchQ) ||
+      (e.tags || []).some(t => t.toLowerCase().includes(gallerySearchQ)) ||
+      (e.loc || '').toLowerCase().includes(gallerySearchQ)
+    );
+  }
+
+  document.getElementById('galleryCount').textContent =
+    `${entries.length} ${entries.length === 1 ? 'voce' : 'voci'}`;
+
+  const grid = document.getElementById('galleryGrid');
+  grid.innerHTML = '';
+
+  if (!entries.length) {
+    grid.innerHTML = '<div class="gallery-empty">// nessuna voce trovata</div>';
+    return;
+  }
+
+  entries.forEach(e => {
+    const card = document.createElement('div');
+    card.className = 'g-card';
+    const tagsHtml = (e.tags || []).slice(0, 3).map(t =>
+      `<span class="g-card-tag">#${esc(t)}</span>`).join('');
+
+    card.innerHTML = `
+      <div class="g-card-nb">${esc(e.nbName)}</div>
+      <div class="g-card-date">
+        <span>${esc(e.date || '')}</span>
+        <span>${esc(e.time || '')}</span>
+        ${e.mood ? `<span class="g-card-mood">${e.mood}</span>` : ''}
+      </div>
+      <div class="g-card-text">${esc(e.text)}</div>
+      ${tagsHtml ? `<div class="g-card-tags">${tagsHtml}</div>` : ''}`;
+
+    // Colore bordo superiore per blocco
+    const nbIndex = notebooks.findIndex(n => n.id === e.nbId);
+    const borderColors = ['#00e5ff','#ff2d78','#f0a500','#00b4a2','#a371f7','#ff9500'];
+    card.style.borderTopColor = borderColors[nbIndex % borderColors.length];
+
+    card.addEventListener('click', () => {
+      showPage('editor');
+      switchTab(e.nbId);
+      document.getElementById('noteTextarea').value = e.text;
+      toast('voce aperta nell\'editor');
+    });
+
+    grid.appendChild(card);
+  });
+}
 </script>
 </body>
 </html>
