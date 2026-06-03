@@ -6,32 +6,39 @@
 <title>appunti</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:ital,wght@0,300;0,400;0,600;1,300&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:        #080b12;
-    --bg2:       #0d1120;
-    --surface:   #0f1520;
-    --surface2:  #141c2e;
-    --border:    #1a2540;
-    --border2:   #121a2e;
+:root {
+  /* ── SFONDI (dal più scuro al più chiaro) ── */
+  --bg:       #080b12;   /* sfondo principale della pagina */
+  --bg2:      #0d1120;   /* sfondo secondario (es. input, modal) */
+  --surface:  #0f1520;   /* pannelli e card */
+  --surface2: #141c2e;   /* toolbar, statusbar, header sezioni */
 
-    --cyan:      #00e5ff;
-    --pink:      #ff2d78;
-    --gold:      #f0a500;
-    --teal:      #00b4a2;
+  /* ── BORDI ── */
+  --border:  #1a2540;    /* bordo principale */
+  --border2: #121a2e;    /* bordo sottile tra elementi interni */
 
-    --cyan-glow:  rgba(0,229,255,0.10);
-    --pink-glow:  rgba(255,45,120,0.10);
-    --cyan-dim:   rgba(0,229,255,0.45);
-    --pink-dim:   rgba(255,45,120,0.45);
+  /* ── COLORI ACCENTO (palette Miami Vice) ── */
+  --cyan: #00e5ff;       /* accento primario — tab attivi, focus, link */
+  --pink: #ff2d78;       /* accento secondario — salva, elimina, GPS */
+  --gold: #f0a500;       /* accento terziario — quick capture, timeline */
+  --teal: #00b4a2;       /* accento quaternario — conferme, badge voci */
 
-    --fg:        #d6eaf8;
-    --fg-dim:    #4a6080;
-    --fg-muted:  #243248;
+  /* ── VARIANTI TRASPARENTI DEGLI ACCENTI ── */
+  --cyan-glow: rgba(0,229,255,0.10);   /* sfondo hover/attivo cyan */
+  --pink-glow: rgba(255,45,120,0.10);  /* sfondo hover/attivo pink */
+  --cyan-dim:  rgba(0,229,255,0.45);   /* cyan attenuato (testo secondario) */
+  --pink-dim:  rgba(255,45,120,0.45);  /* pink attenuato (testo secondario) */
 
-    --mono: 'Share Tech Mono', monospace;
-    --display: 'Bebas Neue', sans-serif;
-    --body: 'Raleway', sans-serif;
-  }
+  /* ── TESTO ── */
+  --fg:       #d6eaf8;   /* testo principale */
+  --fg-dim:   #4a6080;   /* testo secondario (metadati, label) */
+  --fg-muted: #243248;   /* testo quasi invisibile (placeholder, decorazioni) */
+
+  /* ── FONT ── */
+  --mono:    'Share Tech Mono', monospace;  /* codice, orari, tag, label */
+  --display: 'Bebas Neue', sans-serif;      /* titoli, pulsanti, tab */
+  --body:    'Raleway', sans-serif;         /* testo degli appunti */
+}
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   ::selection { background: var(--pink); color: #fff; }
