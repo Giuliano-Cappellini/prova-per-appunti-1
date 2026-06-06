@@ -1,17 +1,5 @@
 ╔═══════════════════════════════════╗
   GENERALE
-  Aggiornato: 03/06/2026, 15:10:30
-  Voci totali: 2
+  Aggiornato: 06/06/2026, 08:17:34
+  Voci totali: 0
 ╚═══════════════════════════════════╝
-
-─── [1] ─────────────────────────────
-  Data    : 03/06/2026 13:30:28
-  Luogo   : Jolanda di Savoia, Italia
-
-èè
-
-─── [2] ─────────────────────────────
-  Data    : 28/05/2026 01:03:04
-  Luogo   : Codigoro, Italia
-
-prova blocco appunti
